@@ -2,4 +2,6 @@
 <resources>
     <color name="backgroundColorSecondary">#0096e6</color>
     <color name="backgroundColorSecondaryAccent">#ffaa3f</color>
+    <color name="default_background">#3d3d3d</color>
+
 </resources>
