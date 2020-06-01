@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
 import pl.rm.player.R
-import pl.rm.player.discover.MovieModel
+import pl.rm.player.discover.DiscoverMovie
 
 
-class CardPresenter : Presenter() {
+class DiscoverCardPresenter : Presenter() {
 
     override fun onCreateViewHolder(parent: ViewGroup): CardViewHolder {
         val cardView = ImageCardView(parent.context)
@@ -21,7 +21,7 @@ class CardPresenter : Presenter() {
 
     override fun onBindViewHolder(viewHolder: ViewHolder, item: Any) {
         when (viewHolder) {
-            is CardViewHolder -> viewHolder.movie = item as? MovieModel
+            is CardViewHolder -> viewHolder.movie = item as? DiscoverMovie
         }
     }
 

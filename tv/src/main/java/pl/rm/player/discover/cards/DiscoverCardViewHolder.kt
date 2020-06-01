@@ -12,7 +12,7 @@ import androidx.leanback.widget.Presenter
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import pl.rm.player.R
-import pl.rm.player.discover.MovieModel
+import pl.rm.player.discover.DiscoverMovie
 import pl.rm.player.tools.dpToPixel
 
 
@@ -32,7 +32,7 @@ class CardViewHolder(view: View) : Presenter.ViewHolder(view) {
         imageCard.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT)
     }
 
-    var movie: MovieModel? = null
+    var movie: DiscoverMovie? = null
         set(value) {
             field = value
             imageCard.titleText = value?.title
@@ -40,7 +40,7 @@ class CardViewHolder(view: View) : Presenter.ViewHolder(view) {
             loadMainImage(value)
         }
 
-    private fun loadMainImage(value: MovieModel?) {
+    private fun loadMainImage(value: DiscoverMovie?) {
         val placeholder = placeholderImage ?: return
         Picasso.get()
             .load(value?.image)
