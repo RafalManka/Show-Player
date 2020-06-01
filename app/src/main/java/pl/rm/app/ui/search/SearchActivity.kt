@@ -1,5 +1,6 @@
-package pl.rm.app.ui
+package pl.rm.app.ui.search
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -8,23 +9,39 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pl.rm.app.R
-import pl.rm.app.tools.visible
-import pl.rm.app.ui.adapter.SearchAdapter
+import pl.rm.app.tools.extensions.visible
+import pl.rm.app.ui.player.newPlayerActivityIntent
 import pl.rm.core.state.CategoriesViewModel
 import pl.rm.core.state.Category
 import pl.rm.core.state.Media
+import pl.rm.core.state.tools.byPrependingImageBasePath
 
 
 class SearchActivity : AppCompatActivity() {
 
-    val progressBar: View by lazy { findViewById<View>(R.id.progressBar) }
-    val recyclerView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerView) }
-    lateinit var viewModel: CategoriesViewModel
+    private val progressBar: View by lazy { findViewById<View>(R.id.progressBar) }
+    private val recyclerView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recyclerView) }
+    private lateinit var viewModel: CategoriesViewModel
 
-    private val adapter = SearchAdapter()
+    private val adapter = SearchAdapter { item ->
+        item.resource?.let { resource ->
+            startActivity(
+                newPlayerActivityIntent(
+                    item.title,
+                    resource
+                )
+            )
+        }
+    }
+
+    private val numberOfColumns: Int
+        get() = if (isPortrait) 1 else 2
+
+    private val isPortrait: Boolean
+        get() = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +53,7 @@ class SearchActivity : AppCompatActivity() {
             adapter.filter.filter(null)
             progressBar.visible = false
         })
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = GridLayoutManager(this, numberOfColumns)
         recyclerView.adapter = adapter
     }
 
@@ -60,8 +77,8 @@ class SearchActivity : AppCompatActivity() {
     }
 }
 
-private val Media.model: SearchItem
-    get() = Movie(title)
+private val Media.model: Movie
+    get() = Movie(title, subtitle, thumb.byPrependingImageBasePath, sources.firstOrNull())
 
 private fun List<Category>.flatten(): List<Media> {
     return fold(mutableListOf()) { acc, next ->

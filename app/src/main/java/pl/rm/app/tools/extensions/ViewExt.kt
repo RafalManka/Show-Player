@@ -1,4 +1,4 @@
-package pl.rm.app.tools
+package pl.rm.app.tools.extensions
 
 import android.view.View
 

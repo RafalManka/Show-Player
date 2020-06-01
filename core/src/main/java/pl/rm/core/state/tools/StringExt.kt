@@ -1,4 +1,4 @@
-package pl.rm.player.tools
+package pl.rm.core.state.tools
 
 
 val String.byPrependingImageBasePath: String

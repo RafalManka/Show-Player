@@ -10,7 +10,7 @@ import pl.rm.core.state.Category
 import pl.rm.core.state.Media
 import pl.rm.player.R
 import pl.rm.player.discover.cards.DiscoverCardPresenter
-import pl.rm.player.tools.byPrependingImageBasePath
+import pl.rm.core.state.tools.byPrependingImageBasePath
 import pl.rm.player.tools.getSupportColor
 import pl.rm.player.tools.getSupportDrawable
 

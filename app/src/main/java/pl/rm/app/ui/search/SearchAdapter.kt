@@ -1,29 +1,29 @@
-package pl.rm.app.ui.adapter
+package pl.rm.app.ui.search
 
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import pl.rm.app.tools.containsIgnoreCase
-import pl.rm.app.ui.Movie
-import pl.rm.app.ui.SearchItem
+import pl.rm.app.tools.extensions.containsIgnoreCase
 
-class SearchAdapter : RecyclerView.Adapter<SearchItemViewHolder>(),
-    Filterable {
+
+class SearchAdapter(
+    private var onclickListener: (Movie) -> Unit
+) : RecyclerView.Adapter<SearchItemViewHolder>(), Filterable {
 
     override fun getFilter(): Filter {
         return filter
     }
 
-    private var filteredItems: List<SearchItem> = emptyList()
-    var items: List<SearchItem> = emptyList()
+    private var filteredItems: List<Movie> = emptyList()
+    var items: List<Movie> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder =
-        SearchItemViewHolder(parent)
+        SearchItemViewHolder(parent, onclickListener)
 
     override fun getItemCount(): Int = filteredItems.size
 
@@ -32,13 +32,13 @@ class SearchAdapter : RecyclerView.Adapter<SearchItemViewHolder>(),
 
     private var filter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val results = mutableListOf<SearchItem>()
+            val results = mutableListOf<Movie>()
             results.addAll(when {
                 constraint == null || constraint.length < 3 -> items
                 else -> items.filter {
-                    when (it) {
-                        is Movie -> it.name.containsIgnoreCase(constraint.toString())
-                    }
+                    it.title.containsIgnoreCase(constraint.toString()) || it.subtitle.containsIgnoreCase(
+                        constraint.toString()
+                    )
                 }
             })
             return FilterResults().also { it.values = results }
@@ -47,7 +47,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchItemViewHolder>(),
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             filteredItems = (results?.values as? List<*>)
-                ?.mapNotNull { it as? SearchItem }
+                ?.mapNotNull { it as? Movie }
                 ?: emptyList()
             notifyDataSetChanged()
         }

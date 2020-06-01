@@ -36,7 +36,7 @@ class CardViewHolder(view: View) : Presenter.ViewHolder(view) {
         set(value) {
             field = value
             imageCard.titleText = value?.title
-            imageCard.contentText = value?.studio
+            imageCard.contentText = value?.subtitle
             loadMainImage(value)
         }
 
