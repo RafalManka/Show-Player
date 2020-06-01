@@ -1,2 +1,2 @@
-include ':tv', ':app'
+include ':tv', ':app', ':core'
 rootProject.name='Show Player'
