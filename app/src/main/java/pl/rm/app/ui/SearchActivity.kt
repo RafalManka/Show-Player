@@ -15,8 +15,7 @@ import pl.rm.app.tools.visible
 import pl.rm.app.ui.adapter.SearchAdapter
 import pl.rm.core.state.CategoriesViewModel
 import pl.rm.core.state.Category
-import pl.rm.core.state.Item
-import pl.rm.core.state.Movie
+import pl.rm.core.state.Media
 
 
 class SearchActivity : AppCompatActivity() {
@@ -61,15 +60,10 @@ class SearchActivity : AppCompatActivity() {
     }
 }
 
+private val Media.model: SearchItem
+    get() = Movie(title)
 
-private val Item.model: SearchItem
-    get() {
-        return when (this) {
-            is Movie -> Movie(title)
-        }
-    }
-
-private fun List<Category>.flatten(): List<Item> {
+private fun List<Category>.flatten(): List<Media> {
     return fold(mutableListOf()) { acc, next ->
         acc.addAll(next.videos)
         acc

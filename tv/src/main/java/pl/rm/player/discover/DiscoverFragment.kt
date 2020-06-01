@@ -7,8 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import pl.rm.core.state.CategoriesViewModel
 import pl.rm.core.state.Category
-import pl.rm.core.state.Item
-import pl.rm.core.state.Movie
+import pl.rm.core.state.Media
 import pl.rm.player.R
 import pl.rm.player.discover.cards.DiscoverCardPresenter
 import pl.rm.player.tools.byPrependingImageBasePath
@@ -50,7 +49,7 @@ class BrowseFragment : BrowseSupportFragment() {
             rowViewHolder: RowPresenter.ViewHolder?,
             row: Row?
         ) {
-            if (item is DiscoverMovie) {
+            if (item is Movie) {
                 simpleBackgroundLoader.updateBackgroundWithDelay(moviesBackgroundUrl)
             }
         }
@@ -62,19 +61,17 @@ private val List<Category>.rows: List<ListRow>
         ListRow(HeaderItem(index.toLong(), category.name), category.videos.embed)
     }
 
-private val List<Item>.embed: ObjectAdapter
+private val List<Media>.embed: ObjectAdapter
     get() {
         val cardPresenter = DiscoverCardPresenter()
         val cardRowAdapter = ArrayObjectAdapter(cardPresenter)
         for (item in this) {
             cardRowAdapter.add(
-                when (item) {
-                    is Movie -> DiscoverMovie(
-                        item.title,
-                        item.description,
-                        item.thumb.byPrependingImageBasePath
-                    )
-                }
+                Movie(
+                    item.title,
+                    item.description,
+                    item.thumb.byPrependingImageBasePath
+                )
             )
         }
         return cardRowAdapter
