@@ -58,6 +58,17 @@ it hides along with player controller.
 
 ![Player][player]
 
+
+TV
+--
+
+Tv app created with the use of Leanback library. Data is populated with the same service and 
+ViewModel as in the Android App. Additionally background image is displaying when user navigates 
+from one section to another.
+
+![TV][tv]
+
 [search]: documentation/app-search.png
 [searchLandscape]: documentation/app-search-landcape.png
 [player]: documentation/app-player.png
+[tv]: documentation/tv-app.png
