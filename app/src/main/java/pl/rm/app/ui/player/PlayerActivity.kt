@@ -39,11 +39,7 @@ class PlayerActivity : AppCompatActivity() {
         title = intent.getStringExtra("title")?.toUpperCase(Locale.US)
         videoView.setControllerVisibilityListener {
             isControllerVisible = it == View.VISIBLE
-            if (isControllerVisible) {
-                showActionBar(true)
-            } else {
-                showActionBar(false)
-            }
+            showActionBar(isControllerVisible)
         }
     }
 
