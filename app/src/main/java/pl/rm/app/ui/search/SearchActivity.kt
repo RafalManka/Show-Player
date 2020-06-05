@@ -7,12 +7,12 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pl.rm.app.R
-import pl.rm.app.tools.extensions.visible
 import pl.rm.app.ui.player.newPlayerActivityIntent
 import pl.rm.core.state.CategoriesViewModel
 import pl.rm.core.state.Category
@@ -47,11 +47,11 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         viewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
-        progressBar.visible = true
+        progressBar.isVisible = true
         viewModel.categories.observe(this, Observer { categories ->
             adapter.items = categories.flatten().map { it.model }
             adapter.filter.filter(null)
-            progressBar.visible = false
+            progressBar.isVisible = false
         })
         recyclerView.layoutManager = GridLayoutManager(this, numberOfColumns)
         recyclerView.adapter = adapter
