@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.leanback.widget.BaseCardView.*
+import androidx.leanback.widget.BaseCardView.CARD_TYPE_INFO_UNDER
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
 import com.squareup.picasso.Picasso
@@ -49,21 +49,22 @@ class CardViewHolder(view: View) : Presenter.ViewHolder(view) {
                 view.context.dpToPixel(CARD_HEIGHT)
             )
             .error(placeholder)
-            .into(object : Target {
-                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-
-                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-                    imageCard.mainImage = errorDrawable
-                }
-
-                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                    val bitmapDrawable = BitmapDrawable(view.context.resources, bitmap)
-                    imageCard.setMainImageScaleType(ImageView.ScaleType.CENTER_CROP)
-                    imageCard.mainImage = bitmapDrawable
-                }
-            })
+            .into(target)
     }
 
+    private val target = object : Target {
+        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+
+        override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+            imageCard.mainImage = errorDrawable
+        }
+
+        override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+            val bitmapDrawable = BitmapDrawable(view.context.resources, bitmap)
+            imageCard.setMainImageScaleType(ImageView.ScaleType.CENTER_CROP)
+            imageCard.mainImage = bitmapDrawable
+        }
+    }
 }
 
 
