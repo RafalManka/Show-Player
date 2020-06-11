@@ -1,11 +1,11 @@
 package pl.rm.core.state
 
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Url
 
-interface Categoriesservice {
+interface CategoriesService {
 
     @GET
-    fun getCategories(@Url url: String): Call<List<Category>>
+    suspend fun getCategories(@Url url: String): Response<List<Category>>
 }

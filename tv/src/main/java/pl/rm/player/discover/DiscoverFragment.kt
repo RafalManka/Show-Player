@@ -8,15 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import pl.rm.core.state.CategoriesViewModel
 import pl.rm.core.state.Category
 import pl.rm.core.state.Media
+import pl.rm.core.state.tools.byPrependingImageBasePath
 import pl.rm.player.R
 import pl.rm.player.discover.cards.DiscoverCardPresenter
-import pl.rm.core.state.tools.byPrependingImageBasePath
 import pl.rm.player.tools.getSupportColor
 import pl.rm.player.tools.getSupportDrawable
 
 
-private const val moviesBackgroundUrl =
-    "https://s17736.pcdn.co/wp-content/uploads/2019/03/jason-leung-479251-unsplash.jpg"
+private const val moviesBackgroundUrl =    "https://source.unsplash.com/weekly?video"
 
 class BrowseFragment : BrowseSupportFragment() {
 

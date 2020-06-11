@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import pl.rm.app.R
 import java.util.*
 
@@ -37,7 +37,7 @@ class SearchItemViewHolder(parent: ViewGroup, private var onclickListener: (Movi
 
     fun bind(model: Movie) {
         title.text = model.title.toUpperCase(Locale.US)
-        Picasso.get()
+        Glide.with(image.context)
             .load(model.image)
             .into(image)
         itemView.tag = model
